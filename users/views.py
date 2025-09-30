@@ -141,7 +141,7 @@ def telemetry(request: HttpRequest):
     if not username:
         user.username = id
     else:
-        user.username = user
+        user.username = username
     user.first_name = first_name
     user.last_name = last_name
     user.save()
