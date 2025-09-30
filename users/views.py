@@ -136,11 +136,13 @@ def telemetry(request: HttpRequest):
             last_name=last_name,
             balance=0
         )
-    user = user.first()
+    
+    else:
+        user = user.first()
 
-    user.first_name = first_name
-    user.last_name = last_name
-    user.save()
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
 
     return Response({
         "status": "ok"
