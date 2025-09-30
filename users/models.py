@@ -72,9 +72,11 @@ class Channel(models.Model):
     def save(self, *args, **kwargs):
         try:
             response = requests.get(BOT_URL + "/verify-channel?channel=" + self.id)
-            self.is_verified = True
-        except:
-            pass
+
+            if response.json().get("data") == "administrator":
+                self.is_verified = True
+        except Exception as e:
+            print(e)
         super().save(*args, **kwargs)
     
 
