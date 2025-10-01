@@ -97,7 +97,7 @@ class Advertisement(models.Model):
 def send_ads(ads: Advertisement):
     users = User.objects.filter(role="student")
     for user in users:
-        requests.get(BOT_URL + f"/send-message?chat_id={user.id}&content={ads.content}")
+        requests.get(BOT_URL + f"/send-message?chat_id={user.id}&content={ads.content}&ads={ads.pk}")
     ads.status = "sended"
     ads.save()
     
