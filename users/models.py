@@ -58,7 +58,7 @@ class Transaction(models.Model):
     
 
 class Announcement(models.Model):
-    content = models.TextField(max_length=100, verbose_name="Matn")
+    content = models.TextField(verbose_name="Matn")
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
