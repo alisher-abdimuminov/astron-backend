@@ -15,6 +15,9 @@ class UserModelAdmin(UserAdmin, ModelAdmin):
         "last_name",
         "balance",
     ]
+    list_filter = [
+        "date_joined",
+    ]
 
     model = User
     form = UserChangeForm
