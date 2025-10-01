@@ -121,10 +121,15 @@ def get_announcement(request: HttpRequest):
 def telemetry(request: HttpRequest):
     data = request.data
     
-    id = data.get("id")
+    id = data.get("id", None)
     username = data.get("username", id)
     first_name = data.get("first_name")
     last_name = data.get("last_name")
+
+    if not id:
+        return Response({
+            "status": "!ok"
+        })
 
     user = User.objects.filter(id=id)
 
