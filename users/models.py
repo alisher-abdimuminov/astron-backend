@@ -103,5 +103,6 @@ def send_ads(ads: Advertisement):
     
 @receiver(post_save, sender=Advertisement)
 def send_ads_receiver(sender, instance: Advertisement, created, **kwargs):
+    if created:
         worker = Worker(send_ads, ads=instance)
         worker.start()
