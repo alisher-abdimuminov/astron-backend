@@ -157,14 +157,17 @@ def telemetry(request: HttpRequest):
 @decorators.api_view(http_method_names=["GET"])
 def increment_receivers(request: HttpRequest):
     ads = request.GET.get("ads")
+    print(ads)
 
     if not ads:
+        print(ads)
         return Response({
             "status": "!ok"
         })
     
     ads = Advertisement.objects.filter(pk=ads)
 
+    print(ads)
     if not ads:
         return Response({
             "status": "!ok"
@@ -174,6 +177,7 @@ def increment_receivers(request: HttpRequest):
 
     ads.receivers = ads.receivers + 1
     ads.save()
+    print(ads, ads.pk, ads.receivers)
 
     return Response({
         "status": "ok"
