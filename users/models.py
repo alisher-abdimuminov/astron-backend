@@ -33,7 +33,7 @@ ADS_STATUS = (
 class User(AbstractUser):
     id = models.CharField(max_length=100, primary_key=True, verbose_name="ID")
     role = models.CharField(max_length=20, choices=ROLE, default="student", verbose_name="ROLE")
-    balance = models.DecimalField(max_digits=100, decimal_places=2, verbose_name="Balans")
+    balance = models.DecimalField(max_digits=100, decimal_places=2, verbose_name="Balans", default=0)
     first_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Ism")
     last_name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Familiya")
 
