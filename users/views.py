@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from rest_framework import decorators
 from rest_framework.response import Response
 
-from .models import User, Transaction, Announcement
+from .models import User, Transaction, Announcement, Advertisement
 
 
 @decorators.api_view(http_method_names=["POST"])
@@ -152,3 +152,30 @@ def telemetry(request: HttpRequest):
     return Response({
         "status": "ok"
     })
+
+
+@decorators.api_view(http_method_names=["GET"])
+def increment_receivers(request: HttpRequest):
+    ads = request.GET.get("ads")
+
+    if not ads:
+        return Response({
+            "status": "!ok"
+        })
+    
+    ads = Advertisement.objects.filter(pk=ads)
+
+    if not ads:
+        return Response({
+            "status": "!ok"
+        })
+    
+    ads = ads.first()
+
+    ads.receivers += 1
+    ads.save()
+
+    return Response({
+        "status": "ok"
+    })
+
