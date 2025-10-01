@@ -70,4 +70,4 @@ class ChannelModelAdmin(ModelAdmin):
 
 @admin.register(Advertisement)
 class AdvertisementModelAdmin(ModelAdmin):
-    list_display = ["content", "created"]
+    list_display = ["content", "status", "receivers"]

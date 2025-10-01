@@ -172,7 +172,7 @@ def increment_receivers(request: HttpRequest):
     
     ads = ads.first()
 
-    ads.receivers += 1
+    ads.receivers = ads.receivers + 1
     ads.save()
 
     return Response({
