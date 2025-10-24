@@ -67,7 +67,7 @@ class Announcement(models.Model):
 
 class Count(models.Model):
     count = models.IntegerField(default=0)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateField(auto_now=True)
 
     def __str__(self):
         return str(self.count)
