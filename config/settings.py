@@ -132,6 +132,10 @@ UNFOLD = {
                         "title": "Kanallar",
                         "link": reverse_lazy("admin:users_channel_changelist")
                     },
+                    {
+                        "title": "Sanagichlar",
+                        "link": reverse_lazy("admin:users_count_changelist")
+                    },
                 ]
             }
         ]
