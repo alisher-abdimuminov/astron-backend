@@ -1,10 +1,11 @@
 import json
 import time
+from datetime import datetime
 from django.http import HttpRequest
 from rest_framework import decorators
 from rest_framework.response import Response
 
-from .models import User, Transaction, Announcement, Advertisement
+from .models import User, Transaction, Announcement, Advertisement, Count
 
 
 @decorators.api_view(http_method_names=["POST"])
@@ -71,19 +72,15 @@ def payme_callback(request: HttpRequest):
                 }
             }
         )
-    
+
     if body.get("method") == "PerformTransaction":
         transaction_id = body.get("params", {}).get("id")
 
         transaction = Transaction.objects.filter(id=transaction_id)
 
         if not transaction:
-            return Response({
-                "error": {
-                    "code": -31003
-                }
-            })
-        
+            return Response({"error": {"code": -31003}})
+
         transaction = transaction.first()
         transaction.author.balance = transaction.author.balance + transaction.amount
         transaction.author.save()
@@ -99,7 +96,7 @@ def payme_callback(request: HttpRequest):
                 }
             }
         )
-    
+
     return Response({})
 
 
@@ -107,29 +104,33 @@ def payme_callback(request: HttpRequest):
 def get_announcement(request: HttpRequest):
     announcement = Announcement.objects.last()
     if announcement:
-        return Response({
-            "content": announcement.content,
-            "created": announcement.created
-        })
-    return Response({
-        "content": None,
-        "created": None
-    })
+        return Response(
+            {"content": announcement.content, "created": announcement.created}
+        )
+    return Response({"content": None, "created": None})
 
 
 @decorators.api_view(http_method_names=["POST"])
 def telemetry(request: HttpRequest):
+    today = datetime.today()
+    count = Count.objects.filter(created=today)
+
+    if not count:
+        count = Count.objects.create(count=1)
+    else:
+        count = count.first()
+        count.count += 1
+        count.save()
+        
     data = request.data
-    
+
     id = data.get("id", None)
     username = data.get("username", id)
     first_name = data.get("first_name")
     last_name = data.get("last_name")
 
     if not id:
-        return Response({
-            "status": "!ok"
-        })
+        return Response({"status": "!ok"})
 
     user = User.objects.filter(id=id)
 
@@ -139,9 +140,9 @@ def telemetry(request: HttpRequest):
             username=username,
             first_name=first_name,
             last_name=last_name,
-            balance=0
+            balance=0,
         )
-    
+
     else:
         user = user.first()
 
@@ -149,9 +150,7 @@ def telemetry(request: HttpRequest):
         user.last_name = last_name
         user.save()
 
-    return Response({
-        "status": "ok"
-    })
+    return Response({"status": "ok"})
 
 
 @decorators.api_view(http_method_names=["GET"])
@@ -164,29 +163,20 @@ def increment_receivers(request: HttpRequest):
         if user:
             user = user.first()
             user.delete()
-            return Response({
-                "status": "ok"
-            })
+            return Response({"status": "ok"})
 
     if not ads:
         print(ads)
-        return Response({
-            "status": "!ok"
-        })
-    
+        return Response({"status": "!ok"})
+
     ads = Advertisement.objects.filter(pk=ads)
 
     if not ads:
-        return Response({
-            "status": "!ok"
-        })
-    
+        return Response({"status": "!ok"})
+
     ads = ads.first()
 
     ads.receivers = ads.receivers + 1
     ads.save()
 
-    return Response({
-        "status": "ok"
-    })
-
+    return Response({"status": "ok"})

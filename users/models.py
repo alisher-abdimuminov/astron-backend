@@ -65,6 +65,14 @@ class Announcement(models.Model):
         return self.content
     
 
+class Count(models.Model):
+    count = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.count)
+
+
 class Channel(models.Model):
     id = models.CharField(max_length=100, primary_key=True, verbose_name="ID")
     title = models.CharField(max_length=100, verbose_name="Nomi")
