@@ -3,7 +3,7 @@ from unfold.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
-from .models import Announcement, User, Transaction, Channel, Advertisement
+from .models import Announcement, User, Transaction, Channel, Advertisement, Count
 
 
 @admin.register(User)
@@ -51,6 +51,11 @@ class UserModelAdmin(UserAdmin, ModelAdmin):
             },
         ),
     )
+
+
+@admin.register(Count)
+class CountModelAdmin(ModelAdmin):
+    list_display = ["created", "count"]
 
 
 @admin.register(Announcement)
