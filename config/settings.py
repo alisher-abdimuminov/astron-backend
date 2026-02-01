@@ -13,17 +13,16 @@ DEBUG = config("DEBUG", cast=bool)
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 
-
 INSTALLED_APPS = [
     "unfold",
     "unfold.contrib.filters",
     "unfold.contrib.forms",
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     # extra
     "rest_framework",
     "rest_framework.authtoken",
@@ -33,60 +32,59 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
 
-AUTH_PASSWORD_VALIDATORS = [
-]
+AUTH_PASSWORD_VALIDATORS = []
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
 
@@ -106,7 +104,7 @@ UNFOLD = {
     "SITE_SUBHEADER": "Admin Panel",
     "SITE_ICON": {
         "light": lambda request: "https://astron.uz/favicon.ico",
-        "dark": lambda request: "https://astron.uz/favicon.ico"
+        "dark": lambda request: "https://astron.uz/favicon.ico",
     },
     "SHOW_HISTORY": True,
     "SIDEBAR": {
@@ -118,28 +116,32 @@ UNFOLD = {
                 "items": [
                     {
                         "title": "Foydalanuvchilar",
-                        "link": reverse_lazy("admin:users_user_changelist")
+                        "link": reverse_lazy("admin:users_user_changelist"),
                     },
                     {
                         "title": "Reklamalar",
-                        "link": reverse_lazy("admin:users_advertisement_changelist")
+                        "link": reverse_lazy("admin:users_advertisement_changelist"),
                     },
                     {
                         "title": "E'lonlar",
-                        "link": reverse_lazy("admin:users_announcement_changelist")
+                        "link": reverse_lazy("admin:users_announcement_changelist"),
                     },
                     {
                         "title": "Kanallar",
-                        "link": reverse_lazy("admin:users_channel_changelist")
+                        "link": reverse_lazy("admin:users_channel_changelist"),
                     },
                     {
                         "title": "Sanagichlar",
-                        "link": reverse_lazy("admin:users_count_changelist")
+                        "link": reverse_lazy("admin:users_count_changelist"),
                     },
-                ]
+                    {
+                        "title": "Online kurslar",
+                        "link": reverse_lazy("admin:users_coursechannel_changelist"),
+                    },
+                ],
             }
         ]
-    }
+    },
 }
 
 CORS_ALLOWED_ORIGINS = [

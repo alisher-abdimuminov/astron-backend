@@ -5,6 +5,8 @@ from .views import (
     get_announcement,
     telemetry,
     increment_receivers,
+    CourseChannelListAPIView,
+    like_dislike,
 )
 
 
@@ -13,4 +15,6 @@ urlpatterns = [
     path("announcement/", get_announcement),
     path("telemetry/", telemetry),
     path("increment-receivers/", increment_receivers),
+    path("course_channels/", CourseChannelListAPIView.as_view()),
+    path("like_dislike/", like_dislike),
 ]

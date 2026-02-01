@@ -3,7 +3,15 @@ from unfold.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
-from .models import Announcement, User, Transaction, Channel, Advertisement, Count
+from .models import (
+    Announcement,
+    User,
+    Transaction,
+    Channel,
+    Advertisement,
+    Count,
+    CourseChannel,
+)
 
 
 @admin.register(User)
@@ -51,6 +59,14 @@ class UserModelAdmin(UserAdmin, ModelAdmin):
             },
         ),
     )
+
+
+@admin.register(CourseChannel)
+class CourseChannelModelAdmin(ModelAdmin):
+    list_display = [
+        "handle",
+        "name",
+    ]
 
 
 @admin.register(Count)

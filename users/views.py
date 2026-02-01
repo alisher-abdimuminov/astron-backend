@@ -2,10 +2,17 @@ import json
 import time
 from datetime import datetime
 from django.http import HttpRequest
+from rest_framework import generics
 from rest_framework import decorators
 from rest_framework.response import Response
 
-from .models import User, Transaction, Announcement, Advertisement, Count
+from .models import User, Transaction, Announcement, Advertisement, Count, CourseChannel
+from .serializers import CourseChannelSerializer
+
+
+class CourseChannelListAPIView(generics.ListAPIView):
+    queryset = CourseChannel.objects.all()
+    serializer_class = CourseChannelSerializer
 
 
 @decorators.api_view(http_method_names=["POST"])
@@ -121,7 +128,7 @@ def telemetry(request: HttpRequest):
         count = count.first()
         count.count += 1
         count.save()
-        
+
     data = request.data
 
     id = data.get("id", None)
@@ -178,5 +185,32 @@ def increment_receivers(request: HttpRequest):
 
     ads.receivers = ads.receivers + 1
     ads.save()
+
+    return Response({"status": "ok"})
+
+
+@decorators.api_view(http_method_names=["POST"])
+def like_dislike(request: HttpRequest):
+    data = request.data
+
+    user_id = data.get("user_id", None)
+    course_id = data.get("course_id", None)
+
+    print(user_id, course_id)
+
+    if not user_id or not course_id:
+        return Response({"status": "error"})
+
+    user = User.objects.filter(id=user_id)
+    course = CourseChannel.objects.filter(handle=course_id)
+
+    if user and course:
+        user = user.first()
+        course = course.first()
+
+        if user in course.likers.all():
+            course.likers.remove(user)
+        else:
+            course.likers.add(user)
 
     return Response({"status": "ok"})
